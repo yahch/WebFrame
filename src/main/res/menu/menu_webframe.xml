@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".MainActivity">
+    <item
+        android:id="@+id/action_close"
+        android:icon="@drawable/ic_action_close"
+        android:title="关闭"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_refresh"
+        android:title="刷新"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_share"
+        android:title="分享"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_copylink"
+        android:title="复制链接"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_openWithBrowser"
+        android:title="在浏览器中打开"
+        app:showAsAction="collapseActionView"/>
+</menu>
