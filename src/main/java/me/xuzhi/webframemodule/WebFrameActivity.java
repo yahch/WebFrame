@@ -64,8 +64,6 @@ public class WebFrameActivity extends AppCompatActivity {
             return;
         }
 
-        WebFrameSettings.instance.setOnShowing(true);
-
         toolbarWebFrameModule.setTitle(WebFrameSettings.instance.getUrl());
         toolbarWebFrameModule.setNavigationIcon(R.drawable.ic_action_arrow_back);
 
@@ -220,7 +218,6 @@ public class WebFrameActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        WebFrameSettings.instance.setOnShowing(false);
     }
 
     private void setWindowStatusBarColor(int color) {

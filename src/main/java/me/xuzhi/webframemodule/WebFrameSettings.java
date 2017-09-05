@@ -10,7 +10,6 @@ public enum WebFrameSettings {
     instance;
 
     private String url;
-    private boolean isOnShowing;
     private HashMap<String, Object> objs;
 
     public String getUrl() {
@@ -19,14 +18,6 @@ public enum WebFrameSettings {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public boolean isOnShowing() {
-        return isOnShowing;
-    }
-
-    public void setOnShowing(boolean onShowing) {
-        isOnShowing = onShowing;
     }
 
     public HashMap<String, Object> getObjs() {
@@ -47,7 +38,6 @@ public enum WebFrameSettings {
 
     WebFrameSettings() {
         url = "";
-        isOnShowing = false;
         objs = new HashMap<>();
     }
 
