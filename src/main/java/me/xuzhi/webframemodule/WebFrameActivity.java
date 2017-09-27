@@ -54,6 +54,7 @@ public class WebFrameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setWindowStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.webFrameToolbarBackgroundColor));
         setContentView(R.layout.activity_web_frame);
 
@@ -68,6 +69,10 @@ public class WebFrameActivity extends AppCompatActivity {
         toolbarWebFrameModule.setNavigationIcon(R.drawable.ic_action_arrow_back);
 
         setSupportActionBar(toolbarWebFrameModule);
+
+        if (WebFrameSettings.instance.isNoActionBar()) {
+            getSupportActionBar().hide();
+        }
 
         toolbarWebFrameModule.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,14 +95,12 @@ public class WebFrameActivity extends AppCompatActivity {
         webSettings.setGeolocationEnabled(true);
         webSettings.setSupportZoom(false);
 
-        HashMap<String, Object> invokeObjects = WebFrameSettings.instance.getObjs();
+        HashMap<String, WebFrameScriptInterface> invokeObjects = WebFrameSettings.instance.getObjs();
         if (invokeObjects.size() > 0) {
-            Iterator iter = invokeObjects.entrySet().iterator();
-            while (iter.hasNext()) {
-                Map.Entry entry = (Map.Entry) iter.next();
-                String key = entry.getKey().toString();
-                Object val = entry.getValue();
-                webViewWebFrameModule.addJavascriptInterface(val, key);
+            for (Map.Entry<String, WebFrameScriptInterface> entry : invokeObjects.entrySet()) {
+                WebFrameScriptInterface ws = entry.getValue();
+                ws.setWebFrameActivity(WebFrameActivity.this);
+                webViewWebFrameModule.addJavascriptInterface(ws, entry.getKey());
             }
         }
 

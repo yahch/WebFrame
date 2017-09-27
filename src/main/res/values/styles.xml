@@ -1,5 +1,4 @@
 <resources>
-
     <style name="ModuleTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColorSecondary">#ffffff</item>
     </style>

@@ -10,7 +10,16 @@ public enum WebFrameSettings {
     instance;
 
     private String url;
-    private HashMap<String, Object> objs;
+    private HashMap<String, WebFrameScriptInterface> objs;
+    private boolean noActionBar;
+
+    public boolean isNoActionBar() {
+        return noActionBar;
+    }
+
+    public void setNoActionBar(boolean noActionBar) {
+        this.noActionBar = noActionBar;
+    }
 
     public String getUrl() {
         return url;
@@ -20,12 +29,12 @@ public enum WebFrameSettings {
         this.url = url;
     }
 
-    public HashMap<String, Object> getObjs() {
+    public HashMap<String, WebFrameScriptInterface> getObjs() {
         return objs;
     }
 
-    public void addObject(String key, Object val) {
-        objs.put(key, val);
+    public void addObject(String key, WebFrameScriptInterface obj) {
+        objs.put(key, obj);
     }
 
     public void clearObjects() {
@@ -39,6 +48,7 @@ public enum WebFrameSettings {
     WebFrameSettings() {
         url = "";
         objs = new HashMap<>();
+        noActionBar = false;
     }
 
 }
