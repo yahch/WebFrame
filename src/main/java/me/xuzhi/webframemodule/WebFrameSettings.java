@@ -45,10 +45,18 @@ public enum WebFrameSettings {
         objs.remove(key);
     }
 
-    WebFrameSettings() {
+    public void reset() {
         url = "";
-        objs = new HashMap<>();
+        if (objs == null) {
+            objs = new HashMap<>();
+        } else {
+            objs.clear();
+        }
         noActionBar = false;
+    }
+
+    WebFrameSettings() {
+        reset();
     }
 
 }
