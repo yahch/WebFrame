@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="webFrameToolbarBackgroundColor">#3f51b5</color>
-    <color name="webFrameToolbarForcegroundColor">#FFFFFF</color>
+    <color name="webFrameToolbarForcegroundColor">#ffffff</color>
     <color name="webFrameLoadingBarStartColor">#FF89B2</color>
     <color name="webFrameLoadingBarCenterColor">#FF4081</color>
     <color name="webFrameLoadingBarEndColor">#FF1262</color>

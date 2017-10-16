@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class WebFrameActivity extends AppCompatActivity {
+public class WebFrameActivity extends WebFrameActivityBase {
 
     // 此部分由设计器生成，请勿手动修改
 
@@ -49,6 +49,43 @@ public class WebFrameActivity extends AppCompatActivity {
 
     // 以上代码由设计器生成，请勿手动修改
 
+    private WebChromeClient webChromeClient = new WebChromeClient() {
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+            toolbarWebFrameModule.setTitle(title);
+        }
+
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+            progressBarWebFrameModule.setProgress(newProgress);
+        }
+    };
+
+    private WebViewClient webViewClient = new WebViewClient() {
+
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            //return super.shouldOverrideUrlLoading(view, request);
+            view.loadUrl(request.getUrl().toString());
+            return true;
+        }
+
+        @SuppressWarnings("deprecation")
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+
+        }
+    };
 
     @SuppressLint("JavascriptInterface")
     @Override
@@ -84,25 +121,9 @@ public class WebFrameActivity extends AppCompatActivity {
         });
 
         WebSettings webSettings = webViewWebFrameModule.getSettings();
-        webSettings.setUserAgentString("Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3159.5 Mobile Safari/537.36");
-        webSettings.setAllowContentAccess(true);
-        webSettings.setAllowFileAccess(true);
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        webSettings.setDatabaseEnabled(true);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setGeolocationEnabled(true);
-        webSettings.setSupportZoom(false);
+        initWebViewSettings(webSettings);
+        initWebViewObjects(webViewWebFrameModule);
 
-        HashMap<String, WebFrameScriptInterface> invokeObjects = WebFrameSettings.instance.getObjs();
-        if (invokeObjects.size() > 0) {
-            for (Map.Entry<String, WebFrameScriptInterface> entry : invokeObjects.entrySet()) {
-                WebFrameScriptInterface ws = entry.getValue();
-                ws.setWebFrameActivity(WebFrameActivity.this);
-                webViewWebFrameModule.addJavascriptInterface(ws, entry.getKey());
-            }
-        }
 
         webViewWebFrameModule.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -223,15 +244,5 @@ public class WebFrameActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void setWindowStatusBarColor(int color) {
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Window window = getWindow();
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(color);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 }

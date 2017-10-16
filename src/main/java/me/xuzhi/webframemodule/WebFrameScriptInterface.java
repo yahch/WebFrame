@@ -9,13 +9,13 @@ package me.xuzhi.webframemodule;
  */
 public abstract class WebFrameScriptInterface {
 
-    private WebFrameActivity webFrameActivity;
+    private WebFrameActivityBase webFrameActivityBase;
 
-    public WebFrameActivity getWebFrameActivity() {
-        return webFrameActivity;
+    public WebFrameActivityBase getWebFrameActivity() {
+        return webFrameActivityBase;
     }
 
-    public void setWebFrameActivity(WebFrameActivity webFrameActivity) {
-        this.webFrameActivity = webFrameActivity;
+    public void setWebFrameActivity(WebFrameActivityBase webFrameActivity) {
+        this.webFrameActivityBase = webFrameActivity;
     }
 }

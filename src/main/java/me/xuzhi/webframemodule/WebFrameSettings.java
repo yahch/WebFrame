@@ -12,6 +12,15 @@ public enum WebFrameSettings {
     private String url;
     private HashMap<String, WebFrameScriptInterface> objs;
     private boolean noActionBar;
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public boolean isNoActionBar() {
         return noActionBar;
@@ -52,6 +61,7 @@ public enum WebFrameSettings {
         } else {
             objs.clear();
         }
+        title = "";
         noActionBar = false;
     }
 
