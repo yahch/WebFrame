@@ -5,6 +5,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -70,6 +71,7 @@ public class WebFrameActivitySimple extends WebFrameActivityBase {
         @SuppressWarnings("deprecation")
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            Log.d(getClass().getName(), "shouldOverrideUrlLoading: " + url);
             view.loadUrl(url);
             return true;
         }
@@ -78,6 +80,7 @@ public class WebFrameActivitySimple extends WebFrameActivityBase {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             pbWebFrameModuleSimple.setVisibility(View.GONE);
+            webViewWebFrameModuleSimple.setVisibility(View.VISIBLE);
 
         }
     };
@@ -95,6 +98,8 @@ public class WebFrameActivitySimple extends WebFrameActivityBase {
 
         initUIViews();
 
+        webViewWebFrameModuleSimple.setVisibility(View.INVISIBLE);
+
         tvTitleWebFrameModuleSimple.setText(WebFrameSettings.instance.getTitle());
 
         imgWebFrameModuleSimple.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +115,7 @@ public class WebFrameActivitySimple extends WebFrameActivityBase {
 
         webViewWebFrameModuleSimple.setWebChromeClient(webChromeClient);
         webViewWebFrameModuleSimple.setWebViewClient(webViewClient);
+        Log.d(getClass().getName(), "onCreate: loadUrl->" + WebFrameSettings.instance.getUrl());
         webViewWebFrameModuleSimple.loadUrl(WebFrameSettings.instance.getUrl());
     }
 

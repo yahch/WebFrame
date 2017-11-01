@@ -153,6 +153,7 @@ public class WebFrameActivity extends WebFrameActivityBase {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
+                Log.d(getClass().getName(), "shouldOverrideUrlLoading: " + url);
                 return true;
             }
 
@@ -163,6 +164,7 @@ public class WebFrameActivity extends WebFrameActivityBase {
             }
         });
 
+        Log.d(getClass().getName(), "onCreate: loadUrl->" + WebFrameSettings.instance.getUrl());
         webViewWebFrameModule.loadUrl(WebFrameSettings.instance.getUrl());
 
         looper = new Looper(looperCallback);
