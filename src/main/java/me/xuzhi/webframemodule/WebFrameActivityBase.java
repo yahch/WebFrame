@@ -29,7 +29,7 @@ public abstract class WebFrameActivityBase extends AppCompatActivity {
 
     protected WebFrameSettings frameSettings;
 
-    protected abstract void redirect(String title,String url);
+    public abstract void redirect(String title,String url);
 
     protected void setWindowStatusBarColor(int color) {
         try {
