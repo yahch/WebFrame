@@ -1,8 +1,12 @@
 package me.xuzhi.webframemodule;
 
 import android.os.Build;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
@@ -10,6 +14,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +24,10 @@ import java.util.Map;
  */
 
 public abstract class WebFrameActivityBase extends AppCompatActivity {
+
+    private static final String TAG = "WebFrameActivityBase";
+
+    protected WebFrameSettings frameSettings;
 
     protected void setWindowStatusBarColor(int color) {
         try {
@@ -45,14 +54,16 @@ public abstract class WebFrameActivityBase extends AppCompatActivity {
         webSettings.setSupportZoom(false);
     }
 
-    protected void initWebViewObjects(WebView webView) {
-        HashMap<String, WebFrameScriptInterface> invokeObjects = WebFrameSettings.instance.getObjs();
-        if (invokeObjects.size() > 0) {
-            for (Map.Entry<String, WebFrameScriptInterface> entry : invokeObjects.entrySet()) {
-                WebFrameScriptInterface ws = entry.getValue();
-                ws.setWebFrameActivity(this);
-                webView.addJavascriptInterface(ws, entry.getKey());
-            }
+    protected void initWebViewObjects(WebView webView, ScriptObject scriptObject) {
+        if (scriptObject == null) return;
+        WebFrameScriptInterface ws;
+        try {
+            ws = (WebFrameScriptInterface) Class.forName(scriptObject.getFullClassName())
+                    .newInstance();
+            ws.setWebFrameActivity(this);
+            webView.addJavascriptInterface(ws, scriptObject.getName());
+        } catch (Exception __) {
+            Log.e(TAG, "initWebViewObjects: 动态创建对象失败:", __);
         }
     }
 

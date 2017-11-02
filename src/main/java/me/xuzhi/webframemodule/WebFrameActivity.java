@@ -97,17 +97,22 @@ public class WebFrameActivity extends WebFrameActivityBase {
 
         initUIViews();
 
-        if (WebFrameSettings.instance.getUrl().length() < 4) {
+        frameSettings = (WebFrameSettings) getIntent().getSerializableExtra("settings");
+        if (frameSettings == null) {
+            return;
+        }
+
+        if (frameSettings.getUrl().length() < 4) {
             Toast.makeText(getApplicationContext(), "url不能为空.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        toolbarWebFrameModule.setTitle(WebFrameSettings.instance.getUrl());
+        toolbarWebFrameModule.setTitle(frameSettings.getUrl());
         toolbarWebFrameModule.setNavigationIcon(R.drawable.ic_action_arrow_back);
 
         setSupportActionBar(toolbarWebFrameModule);
 
-        if (WebFrameSettings.instance.isNoActionBar()) {
+        if (frameSettings.isNoActionBar()) {
             getSupportActionBar().hide();
         }
 
@@ -122,7 +127,7 @@ public class WebFrameActivity extends WebFrameActivityBase {
 
         WebSettings webSettings = webViewWebFrameModule.getSettings();
         initWebViewSettings(webSettings);
-        initWebViewObjects(webViewWebFrameModule);
+        initWebViewObjects(webViewWebFrameModule, frameSettings.getScriptObject());
 
 
         webViewWebFrameModule.setWebChromeClient(new WebChromeClient() {
@@ -164,8 +169,8 @@ public class WebFrameActivity extends WebFrameActivityBase {
             }
         });
 
-        Log.d(getClass().getName(), "onCreate: loadUrl->" + WebFrameSettings.instance.getUrl());
-        webViewWebFrameModule.loadUrl(WebFrameSettings.instance.getUrl());
+        Log.d(getClass().getName(), "onCreate: loadUrl->" + frameSettings.getUrl());
+        webViewWebFrameModule.loadUrl(frameSettings.getUrl());
 
         looper = new Looper(looperCallback);
         looper.start();
@@ -211,7 +216,7 @@ public class WebFrameActivity extends WebFrameActivityBase {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_TEXT, webViewWebFrameModule.getTitle() + " - " +
-                "" + WebFrameSettings.instance.getUrl());
+                "" + frameSettings.getUrl());
         shareIntent.setType("text/plain");
         startActivity(Intent.createChooser(shareIntent, "分享到"));
     }
@@ -225,7 +230,7 @@ public class WebFrameActivity extends WebFrameActivityBase {
     private void doOpenWithBrowser() {
         Intent intent = new Intent();
         intent.setAction("android.intent.action.VIEW");
-        Uri content_url = Uri.parse(WebFrameSettings.instance.getUrl());
+        Uri content_url = Uri.parse(frameSettings.getUrl());
         intent.setData(content_url);
         startActivity(intent);
     }
@@ -233,7 +238,7 @@ public class WebFrameActivity extends WebFrameActivityBase {
     private void doCopyLink() {
         try {
             ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clipData = ClipData.newPlainText("link", WebFrameSettings.instance.getUrl());
+            ClipData clipData = ClipData.newPlainText("link", frameSettings.getUrl());
             cm.setPrimaryClip(clipData);
             Toast.makeText(getApplicationContext(), "复制链接成功", Toast.LENGTH_SHORT).show();
         } catch (Exception ex) {

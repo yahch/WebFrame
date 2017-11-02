@@ -1,33 +1,25 @@
 package me.xuzhi.webframemodule;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by xuzhi on 2017/9/4.
  */
 
-public enum WebFrameSettings {
-    instance;
+public class WebFrameSettings implements Serializable {
 
     private String url;
-    private HashMap<String, WebFrameScriptInterface> objs;
-    private boolean noActionBar;
     private String title;
+    private ScriptObject scriptObject;
+    private boolean noActionBar;
 
-    public String getTitle() {
-        return title;
-    }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public boolean isNoActionBar() {
-        return noActionBar;
-    }
-
-    public void setNoActionBar(boolean noActionBar) {
-        this.noActionBar = noActionBar;
+    public WebFrameSettings() {
+        url = "";
+        scriptObject = new ScriptObject();
+        noActionBar = true;
+        title = "";
     }
 
     public String getUrl() {
@@ -38,35 +30,27 @@ public enum WebFrameSettings {
         this.url = url;
     }
 
-    public HashMap<String, WebFrameScriptInterface> getObjs() {
-        return objs;
+    public String getTitle() {
+        return title;
     }
 
-    public void addObject(String key, WebFrameScriptInterface obj) {
-        objs.put(key, obj);
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void clearObjects() {
-        objs.clear();
+    public ScriptObject getScriptObject() {
+        return scriptObject;
     }
 
-    public void removeObject(String key) {
-        objs.remove(key);
+    public void setScriptObject(ScriptObject scriptObject) {
+        this.scriptObject = scriptObject;
     }
 
-    public void reset() {
-        url = "";
-        if (objs == null) {
-            objs = new HashMap<>();
-        } else {
-            objs.clear();
-        }
-        title = "";
-        noActionBar = false;
+    public boolean isNoActionBar() {
+        return noActionBar;
     }
 
-    WebFrameSettings() {
-        reset();
+    public void setNoActionBar(boolean noActionBar) {
+        this.noActionBar = noActionBar;
     }
-
 }

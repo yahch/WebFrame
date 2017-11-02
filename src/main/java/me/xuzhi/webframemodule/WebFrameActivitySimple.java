@@ -98,9 +98,14 @@ public class WebFrameActivitySimple extends WebFrameActivityBase {
 
         initUIViews();
 
+        frameSettings = (WebFrameSettings) getIntent().getSerializableExtra("settings");
+        if (frameSettings == null) {
+            return;
+        }
+
         webViewWebFrameModuleSimple.setVisibility(View.INVISIBLE);
 
-        tvTitleWebFrameModuleSimple.setText(WebFrameSettings.instance.getTitle());
+        tvTitleWebFrameModuleSimple.setText(frameSettings.getTitle());
 
         imgWebFrameModuleSimple.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,12 +116,12 @@ public class WebFrameActivitySimple extends WebFrameActivityBase {
 
         WebSettings webSettings = webViewWebFrameModuleSimple.getSettings();
         initWebViewSettings(webSettings);
-        initWebViewObjects(webViewWebFrameModuleSimple);
+        initWebViewObjects(webViewWebFrameModuleSimple, frameSettings.getScriptObject());
 
         webViewWebFrameModuleSimple.setWebChromeClient(webChromeClient);
         webViewWebFrameModuleSimple.setWebViewClient(webViewClient);
-        Log.d(getClass().getName(), "onCreate: loadUrl->" + WebFrameSettings.instance.getUrl());
-        webViewWebFrameModuleSimple.loadUrl(WebFrameSettings.instance.getUrl());
+        Log.d(getClass().getName(), "onCreate: loadUrl->" + frameSettings.getUrl());
+        webViewWebFrameModuleSimple.loadUrl(frameSettings.getUrl());
     }
 
 }
