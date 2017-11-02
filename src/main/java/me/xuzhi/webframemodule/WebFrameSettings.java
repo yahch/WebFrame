@@ -17,7 +17,7 @@ public class WebFrameSettings implements Serializable {
 
     public WebFrameSettings() {
         url = "";
-        scriptObject = new ScriptObject();
+        scriptObject = null;
         noActionBar = true;
         title = "";
     }
