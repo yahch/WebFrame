@@ -125,7 +125,7 @@ public class WebFrameActivitySimple extends WebFrameActivityBase {
     }
 
     @Override
-    protected void redirect(String title, String url) {
+    public void redirect(String title, String url) {
         tvTitleWebFrameModuleSimple.setText(title);
         webViewWebFrameModuleSimple.loadUrl(url);
     }
