@@ -252,4 +252,13 @@ public class WebFrameActivity extends WebFrameActivityBase {
     }
 
 
+    @Override
+    protected void redirect(String title, String url) {
+        try {
+            toolbarWebFrameModule.setTitle(title);
+            webViewWebFrameModule.loadUrl(url);
+        } catch (Exception __) {
+
+        }
+    }
 }

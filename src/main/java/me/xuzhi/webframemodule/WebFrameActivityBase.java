@@ -29,6 +29,8 @@ public abstract class WebFrameActivityBase extends AppCompatActivity {
 
     protected WebFrameSettings frameSettings;
 
+    protected abstract void redirect(String title,String url);
+
     protected void setWindowStatusBarColor(int color) {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
