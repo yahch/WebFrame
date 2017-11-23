@@ -29,16 +29,18 @@ public class WebFrameActivitySimple extends WebFrameActivityBase {
 // 此部分代码由生成器自动生成
 
     private ImageView imgWebFrameModuleSimple;
+    private TextView tvBackWebFrameModuleSimple;
     private TextView tvTitleWebFrameModuleSimple;
-    private ProgressBar pbWebFrameModuleSimple;
     private WebView webViewWebFrameModuleSimple;
+    private ProgressBar pbWebFrameModuleSimple;
 
     private void initUIViews() {
 
         imgWebFrameModuleSimple = (ImageView) findViewById(R.id.imgWebFrameModuleSimple);
+        tvBackWebFrameModuleSimple = (TextView) findViewById(R.id.tvBackWebFrameModuleSimple);
         tvTitleWebFrameModuleSimple = (TextView) findViewById(R.id.tvTitleWebFrameModuleSimple);
-        pbWebFrameModuleSimple = (ProgressBar) findViewById(R.id.pbWebFrameModuleSimple);
         webViewWebFrameModuleSimple = (WebView) findViewById(R.id.webViewWebFrameModuleSimple);
+        pbWebFrameModuleSimple = (ProgressBar) findViewById(R.id.pbWebFrameModuleSimple);
 
     }
 
@@ -107,10 +109,22 @@ public class WebFrameActivitySimple extends WebFrameActivityBase {
 
         tvTitleWebFrameModuleSimple.setText(frameSettings.getTitle());
 
-        imgWebFrameModuleSimple.setOnClickListener(new View.OnClickListener() {
+        tvBackWebFrameModuleSimple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        imgWebFrameModuleSimple.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (webViewWebFrameModuleSimple != null && webViewWebFrameModuleSimple.canGoBack
+                        () && frameSettings.isBackEnable()) {
+                    webViewWebFrameModuleSimple.goBack();
+                } else {
+                    finish();
+                }
             }
         });
 
@@ -128,5 +142,15 @@ public class WebFrameActivitySimple extends WebFrameActivityBase {
     public void redirect(String title, String url) {
         tvTitleWebFrameModuleSimple.setText(title);
         webViewWebFrameModuleSimple.loadUrl(url);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (webViewWebFrameModuleSimple != null && webViewWebFrameModuleSimple.canGoBack() &&
+                frameSettings.isBackEnable()) {
+            webViewWebFrameModuleSimple.goBack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

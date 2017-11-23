@@ -44,7 +44,8 @@ public abstract class WebFrameActivityBase extends AppCompatActivity {
     }
 
     protected void initWebViewSettings(WebSettings webSettings) {
-        webSettings.setUserAgentString("Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3159.5 Mobile Safari/537.36");
+        webSettings.setUserAgentString("Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) igpsportapp " +
+                "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3159.5 Mobile Safari/537.36");
         webSettings.setAllowContentAccess(true);
         webSettings.setAllowFileAccess(true);
         webSettings.setAppCacheEnabled(true);

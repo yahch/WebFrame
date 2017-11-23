@@ -119,7 +119,8 @@ public class WebFrameActivity extends WebFrameActivityBase {
         toolbarWebFrameModule.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (webViewWebFrameModule.canGoBack()) {
+                if (webViewWebFrameModule != null && webViewWebFrameModule.canGoBack() &&
+                        frameSettings.isBackEnable()) {
                     webViewWebFrameModule.goBack();
                 } else finish();
             }
@@ -259,6 +260,16 @@ public class WebFrameActivity extends WebFrameActivityBase {
             webViewWebFrameModule.loadUrl(url);
         } catch (Exception __) {
 
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (webViewWebFrameModule != null && webViewWebFrameModule.canGoBack() &&
+                frameSettings.isBackEnable()) {
+            webViewWebFrameModule.goBack();
+        } else {
+            super.onBackPressed();
         }
     }
 }

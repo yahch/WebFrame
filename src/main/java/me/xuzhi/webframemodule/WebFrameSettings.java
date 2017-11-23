@@ -13,6 +13,7 @@ public class WebFrameSettings implements Serializable {
     private String title;
     private ScriptObject scriptObject;
     private boolean noActionBar;
+    private boolean backEnable;
 
 
     public WebFrameSettings() {
@@ -20,6 +21,7 @@ public class WebFrameSettings implements Serializable {
         scriptObject = null;
         noActionBar = true;
         title = "";
+        backEnable = false;
     }
 
     public String getUrl() {
@@ -52,5 +54,13 @@ public class WebFrameSettings implements Serializable {
 
     public void setNoActionBar(boolean noActionBar) {
         this.noActionBar = noActionBar;
+    }
+
+    public boolean isBackEnable() {
+        return backEnable;
+    }
+
+    public void setBackEnable(boolean backEnable) {
+        this.backEnable = backEnable;
     }
 }
